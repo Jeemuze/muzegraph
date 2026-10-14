@@ -1,0 +1,138 @@
+{
+  "site": {
+    "name": "Mulaidigital",
+    "tagline": "Solusi Website Siap Pakai & Hemat",
+    "url": "https://mulaidigital.com",
+    "logo": "/assets/logo-dark.png",
+    "favicon": "/assets/favicon.png",
+    "locale": "id_ID",
+    "author": "Mulaidigital",
+    "email": "hello@mulaidigital.com"
+  },
+
+  "seo": {
+    "title": "Jasa Website Company Profile & Landing Page - Mulaidigital",
+    "description": "Mulaidigital menyediakan jasa pembuatan website company profile, landing page, dan SEO untuk UMKM, startup, dan bisnis. Solusi cepat, modern, dan siap pakai.",
+    "keywords": [
+      "jasa pembuatan website",
+      "website company profile",
+      "jasa landing page",
+      "jasa website murah",
+      "jasa website UMKM",
+      "jasa SEO Indonesia",
+      "web developer Indonesia"
+    ],
+    "robots": "index, follow",
+
+    "openGraph": {
+      "title": "Jasa Website Modern & Siap Pakai",
+      "description": "Bangun website profesional tanpa ribet. Cocok untuk UMKM & startup.",
+      "image": "/og-image.png",
+      "type": "website"
+    },
+
+    "twitter": {
+      "card": "summary_large_image",
+      "title": "Mulaidigital - Website Siap Pakai",
+      "description": "Solusi website modern untuk bisnis Anda.",
+      "image": "/og-image.png"
+    }
+  },
+
+  "hero": {
+    "title": "Bangun Website Company Profile Tanpa Ribet",
+    "description": "Template modern, cepat, dan siap digunakan untuk bisnis Anda.",
+    "primaryCta": "Hubungi Kami",
+    "secondaryCta": "Lihat Layanan"
+  },
+
+  "services": [
+    {
+      "title": "Website Company Profile",
+      "description": "Website profesional untuk meningkatkan kredibilitas bisnis Anda."
+    },
+    {
+      "title": "Landing Page",
+      "description": "Halaman penjualan yang fokus meningkatkan konversi."
+    },
+    {
+      "title": "SEO Optimization",
+      "description": "Optimasi website agar muncul di Google."
+    }
+  ],
+
+  "benefits": [
+    "Desain modern dan clean",
+    "Mudah dikustom",
+    "Siap dikembangkan ke fullstack"
+  ],
+
+  "testimonials": [
+    {
+      "name": "Andi",
+      "role": "Owner UMKM",
+      "message": "Website-nya cepat dan mudah digunakan!"
+    }
+  ],
+
+  "faq": [
+    {
+      "question": "Apakah ini template statis?",
+      "answer": "Ya, saat ini masih statis menggunakan content.json."
+    }
+  ],
+
+  "contact": {
+    "email": "hello@mulaidigital.com",
+    "phone": "08123456789",
+    "whatsapp": "628123456789"
+  },
+
+  "pages": {
+
+    "home": {
+    "title": "Jasa Website Company Profile & Landing Page - Mulaidigital",
+    "description": "Solusi website siap pakai untuk UMKM dan bisnis.",
+    "path": "/"
+  },
+  "services": {
+    "title": "Layanan Website - Mulaidigital",
+    "description": "Layanan pembuatan website profesional.",
+    "path": "/services"
+  },
+  "contact": {
+    "title": "Kontak Kami - Mulaidigital",
+    "description": "Hubungi kami untuk konsultasi website.",
+    "path": "/contact"
+  },
+  "about": {
+    "title": "Tentang Kami - Mulaidigital",
+    "description": "Mulaidigital adalah penyedia jasa website profesional untuk UMKM dan bisnis.",
+    "path": "/about"
+  }
+},
+
+
+"schema": {
+  "organization": {
+    "type": "Organization"
+  },
+  "website": {
+    "type": "WebSite"
+  },
+  "services": [
+    {
+      "name": "Jasa Website Company Profile",
+      "description": "Jasa pembuatan website company profile profesional untuk UMKM dan bisnis."
+    },
+    {
+      "name": "Jasa Landing Page",
+      "description": "Landing page yang fokus meningkatkan konversi penjualan."
+    }
+  ]
+},
+
+  "footer": {
+    "text": "© 2026 Mulaidigital. All rights reserved."
+  }
+}

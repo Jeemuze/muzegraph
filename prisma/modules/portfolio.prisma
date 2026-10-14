@@ -1,0 +1,94 @@
+model Portfolio {
+  id             String                   @id @default(cuid())
+  slug           String                   @unique
+  clientName     String?
+  industry       String?
+  location       String?
+  completedAt    DateTime?
+  coverImageId   String?
+  isFeatured     Boolean                  @default(false)
+  isActive       Boolean                  @default(true)
+  order          Int                      @default(0)
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+
+  coverImage     Media?                   @relation("PortfolioCover", fields: [coverImageId], references: [id], onDelete: SetNull)
+  translations   PortfolioTranslation[]
+  galleries      PortfolioGallery[]
+  tags           PortfolioTagMap[]
+
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([order])
+}
+
+model PortfolioTranslation {
+  id             String        @id @default(cuid())
+  portfolioId    String
+  languageId     String
+  title          String
+  excerpt        String?
+  description    String
+  result         String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  portfolio      Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  language       Language      @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([portfolioId, languageId])
+  @@index([portfolioId])
+  @@index([languageId])
+}
+
+model PortfolioGallery {
+  id             String        @id @default(cuid())
+  portfolioId    String
+  mediaId        String
+  order          Int           @default(0)
+
+  portfolio      Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  media          Media         @relation("PortfolioGalleryMedia", fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@index([portfolioId])
+  @@index([mediaId])
+}
+
+model PortfolioTag {
+  id             String                   @id @default(cuid())
+  slug           String                   @unique
+  isActive       Boolean                  @default(true)
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+
+  translations   PortfolioTagTranslation[]
+  portfolios     PortfolioTagMap[]
+
+  @@index([isActive])
+}
+
+model PortfolioTagTranslation {
+  id             String        @id @default(cuid())
+  tagId          String
+  languageId     String
+  name           String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  tag            PortfolioTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  language       Language      @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([tagId, languageId])
+  @@index([tagId])
+  @@index([languageId])
+}
+
+model PortfolioTagMap {
+  portfolioId    String
+  tagId          String
+
+  portfolio      Portfolio     @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  tag            PortfolioTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([portfolioId, tagId])
+}

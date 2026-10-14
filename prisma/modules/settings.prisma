@@ -1,0 +1,24 @@
+model Seo {
+  id                 String   @id @default(cuid())
+  siteName           String?
+  siteUrl            String?
+  siteLogo           String?
+  title              String?
+  description        String?
+  keywords           String?
+  robots             String?
+  canonicalUrl       String?
+  locale             String?  @default("id_ID")
+  ogTitle            String?
+  ogDescription      String?
+  ogImage            String?
+  ogType             String?  @default("website")
+  twitterCard        String?  @default("summary_large_image")
+  twitterTitle       String?
+  twitterDescription String?
+  twitterImage       String?
+  twitterSite        String?
+  structuredData     Json?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

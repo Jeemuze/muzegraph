@@ -1,0 +1,103 @@
+model Language {
+  id                       String                    @id @default(cuid())
+  code                     String                    @unique
+  name                     String
+  nativeName               String
+  isDefault                Boolean                   @default(false)
+  isActive                 Boolean                   @default(true)
+  order                    Int                       @default(0)
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  postCategoryTranslations PostCategoryTranslation[]
+  postTagTranslations      PostTagTranslation[]
+  postTranslations         PostTranslation[]
+  translations             ServiceTranslation[]
+  testimonialTranslations  TestimonialTranslation[]
+  faqTranslations          FaqTranslation[]
+  faqCategoryTranslations  FaqCategoryTranslation[]
+  portfolioTranslations      PortfolioTranslation[]
+  portfolioTagTranslations   PortfolioTagTranslation[]
+  pageTranslations         PageTranslation[]
+  heroTranslations         HeroTranslation[]
+}
+
+model PostCategory {
+  id           String                    @id @default(cuid())
+  icon         String?
+  isActive     Boolean                   @default(true)
+  order        Int                       @default(0)
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+  translations PostCategoryTranslation[]
+  posts        PostToCategory[]
+}
+
+model PostCategoryTranslation {
+  id          String       @id @default(cuid())
+  categoryId  String
+  languageId  String
+  name        String
+  slug        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  category    PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  language    Language     @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, languageId])
+  @@unique([slug, languageId])
+  @@index([categoryId])
+  @@index([languageId])
+}
+
+model PostTag {
+  id           String               @id @default(cuid())
+  isActive     Boolean              @default(true)
+  order        Int                  @default(0)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  translations PostTagTranslation[]
+  posts        PostToTag[]
+}
+
+model PostTagTranslation {
+  id         String   @id @default(cuid())
+  tagId      String
+  languageId String
+  name       String
+  slug       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  tag        PostTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([tagId, languageId])
+  @@unique([slug, languageId])
+  @@index([tagId])
+  @@index([languageId])
+}
+
+model PostToCategory {
+  id         String       @id @default(cuid())
+  postId     String
+  categoryId String
+  category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  post       Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, categoryId])
+  @@index([postId])
+  @@index([categoryId])
+}
+
+model PostToTag {
+  id     String  @id @default(cuid())
+  postId String
+  tagId  String
+  post   Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    PostTag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, tagId])
+  @@index([postId])
+  @@index([tagId])
+
+}

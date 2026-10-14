@@ -1,0 +1,23 @@
+enum MediaType {
+  IMAGE
+  FILE
+  VIDEO
+}
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+  ARCHIVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ContactStatus {
+  UNREAD
+  READ
+}

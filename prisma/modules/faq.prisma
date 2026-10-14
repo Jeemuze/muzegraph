@@ -1,0 +1,65 @@
+model Faq {
+  id           String           @id @default(cuid())
+  categoryId   String?
+  isFeatured   Boolean          @default(false)
+  isActive     Boolean          @default(true)
+  order        Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  category     FaqCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  translations FaqTranslation[]
+
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([order])
+}
+
+model FaqTranslation {
+  id         String    @id @default(cuid())
+  faqId      String
+  languageId String
+  question   String
+  answer     String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  faq        Faq       @relation(fields: [faqId], references: [id], onDelete: Cascade)
+  language   Language  @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([faqId, languageId])
+  @@index([faqId])
+  @@index([languageId])
+}
+
+model FaqCategory {
+  id           String           @id @default(cuid())
+  slug         String           @unique
+  isActive     Boolean          @default(true)
+  order        Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  faqs         Faq[]
+  translations FaqCategoryTranslation[]
+
+  @@index([isActive])
+  @@index([order])
+}
+
+model FaqCategoryTranslation {
+  id            String       @id @default(cuid())
+  categoryId    String
+  languageId    String
+  name          String
+  description   String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  category      FaqCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  language      Language     @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, languageId])
+  @@index([categoryId])
+  @@index([languageId])
+}

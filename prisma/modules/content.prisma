@@ -1,0 +1,108 @@
+model Service {
+  id           String               @id @default(cuid())
+  icon         String?
+  isActive     Boolean              @default(true)
+  order        Int                  @default(0)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  images       ServiceImage[]
+  translations ServiceTranslation[]
+}
+
+model ServiceTranslation {
+  id          String   @id @default(cuid())
+  serviceId   String
+  languageId  String
+  title       String
+  slug        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  language    Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, languageId])
+  @@unique([slug, languageId])
+  @@index([serviceId])
+  @@index([languageId])
+}
+
+model ServiceImage {
+  id        String  @id @default(cuid())
+  serviceId String
+  mediaId   String
+  order     Int     @default(0)
+  media     Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@unique([serviceId, mediaId])
+  @@index([serviceId])
+  @@index([mediaId])
+}
+
+model Post {
+  id            String            @id @default(cuid())
+  authorId      String
+  thumbnailId   String?
+  status        PostStatus        @default(DRAFT)
+  publishedAt   DateTime?
+  isFeatured    Boolean           @default(false)
+  viewCount     Int               @default(0)
+  readingTime   Int               @default(0)
+  allowComments Boolean           @default(false)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  author        User              @relation(fields: [authorId], references: [id])
+  thumbnail     Media?            @relation("PostThumbnail", fields: [thumbnailId], references: [id])
+
+  categories    PostToCategory[]
+  tags          PostToTag[]
+  translations  PostTranslation[]
+  featuredMedia BlogPostMedia[]
+  comments      Comment[]
+
+  @@index([status])
+  @@index([publishedAt])
+  @@index([authorId])
+  @@index([thumbnailId])
+  @@index([status, publishedAt])
+}
+
+model BlogPostMedia {
+  id        String   @id @default(cuid())
+  postId    String
+  mediaId   String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  post  Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, mediaId])
+  @@index([postId])
+  @@index([mediaId])
+}
+
+model PostTranslation {
+  id              String   @id @default(cuid())
+  postId          String
+  languageId      String
+  title           String
+  slug            String
+  excerpt         String?
+  content         String
+  metaTitle       String?
+  metaDescription String?
+  keywords        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  language        Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  post            Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, languageId])
+  @@unique([slug, languageId])
+  @@index([slug])
+  @@index([postId])
+  @@index([languageId])
+}

@@ -1,0 +1,38 @@
+model Testimonial {
+  id           String                   @id @default(cuid())
+  clientName   String
+  clientRole   String?
+  companyName  String?
+  companyUrl   String?
+  projectName  String?
+  rating       Int                      @default(5)
+  avatarId     String?
+  isFeatured   Boolean                  @default(false)
+  isActive     Boolean                  @default(true)
+  order        Int                      @default(0)
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  avatar       Media?                   @relation(fields: [avatarId], references: [id], onDelete: SetNull)
+  translations TestimonialTranslation[]
+
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([order])
+}
+
+model TestimonialTranslation {
+  id            String       @id @default(cuid())
+  testimonialId String
+  languageId    String
+  content       String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  testimonial   Testimonial  @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+  language      Language     @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([testimonialId, languageId])
+  @@index([testimonialId])
+  @@index([languageId])
+}

@@ -1,0 +1,53 @@
+model Hero {
+  id              String   @id @default(cuid())
+  type            String   @default("STATIC") // STATIC | SLIDER | VIDEO
+  imageId         String?
+  videoUrl        String?
+  ctaPrimaryUrl   String?
+  ctaSecondaryUrl String?
+  overlayOpacity  Int      @default(40)
+  isActive        Boolean  @default(true)
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  image        Media?            @relation("HeroImage", fields: [imageId], references: [id], onDelete: SetNull)
+  images       HeroImage[]
+  translations HeroTranslation[]
+
+  @@index([isActive, order])
+}
+
+model HeroImage {
+  id      String @id @default(cuid())
+  heroId  String
+  mediaId String
+  order   Int    @default(0)
+
+  hero  Hero  @relation(fields: [heroId], references: [id], onDelete: Cascade)
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  @@unique([heroId, mediaId])
+  @@index([heroId])
+  @@index([mediaId])
+}
+
+model HeroTranslation {
+  id             String   @id @default(cuid())
+  heroId         String
+  languageId     String
+  title          String
+  subtitle       String?
+  description    String?
+  ctaPrimaryText String?
+  ctaSecondaryText String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  hero     Hero     @relation(fields: [heroId], references: [id], onDelete: Cascade)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([heroId, languageId])
+  @@index([heroId])
+  @@index([languageId])
+}

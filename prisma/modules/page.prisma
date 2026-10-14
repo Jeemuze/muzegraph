@@ -1,0 +1,60 @@
+model Page {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  status      PostStatus @default(DRAFT)
+  isHomePage  Boolean    @default(false)
+  template    String?    @default("default")
+  publishedAt DateTime?
+  canonicalUrl String?
+  ogImage      String?
+  structuredData Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations PageTranslation[]
+  sections     PageSection[]
+
+  @@index([status])
+  @@index([slug, status])
+}
+
+model PageTranslation {
+  id         String @id @default(cuid())
+  pageId     String
+  languageId String
+
+  title           String
+  excerpt         String?
+  content         String?
+  metaTitle       String?
+  metaDescription String?
+  ogImage         String?
+  canonicalUrl    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  page     Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@unique([pageId, languageId])
+  @@index([languageId])
+}
+
+model PageSection {
+  id       String  @id @default(cuid())
+  pageId   String
+  type     String
+  order    Int     @default(0)
+  isActive Boolean @default(true)
+  content  Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  page Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@index([pageId])
+  @@index([type])
+}

@@ -1,0 +1,20 @@
+model Media {
+  id           String    @id @default(cuid())
+  name         String
+  url          String
+  type         MediaType
+  mimeType     String?
+  size         Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  thumbnailPosts Post[]         @relation("PostThumbnail")
+  blogPosts      BlogPostMedia[]
+  services       ServiceImage[]
+  testimonials Testimonial[]
+  portfolioCovers   Portfolio[]        @relation("PortfolioCover")
+  portfolioGallery  PortfolioGallery[] @relation("PortfolioGalleryMedia")
+  heroes            Hero[]             @relation("HeroImage")
+  heroImages        HeroImage[]
+
+}

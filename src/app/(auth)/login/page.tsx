@@ -1,0 +1,57 @@
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+
+import { GalleryVerticalEnd } from "lucide-react";
+import { LoginForm } from "@/components/login-form";
+import Image from "next/image";
+
+export default async function LoginPage() {
+  const session = await auth();
+
+  if (session?.user?.id) {
+    const userExists = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { id: true },
+    });
+    if (userExists) {
+      redirect("/admin");
+    }
+  }
+
+  return (
+    <div className="grid min-h-svh lg:grid-cols-2">
+      {/* LEFT */}
+      <div className="flex flex-col gap-4 p-6 md:p-10">
+        {/* LOGO */}
+        <div className="flex justify-center gap-2 md:justify-start">
+          <div className="flex items-center gap-2 font-medium">
+            <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+              <GalleryVerticalEnd className="size-4" />
+            </div>
+            Mulai Digital.
+          </div>
+        </div>
+
+        {/* FORM */}
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-xs">
+            <LoginForm />
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT IMAGE */}
+<div className="relative hidden lg:block">
+<Image
+  src="/assets/auth/hero.jpg"
+  alt="Login Hero"
+  fill
+  sizes="(min-width: 1024px) 50vw, 100vw"
+  priority
+  className="object-cover"
+/>
+</div>
+    </div>
+  );
+}
