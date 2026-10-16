@@ -184,7 +184,7 @@ export default async function AdminDashboard() {
         <div className="flex flex-col justify-start">
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">
-              🚀 Website Company Profile Siap Pakai
+               Website Company Profile Siap Pakai
             </h2>
 
             <p className="text-sm text-muted-foreground">
@@ -201,7 +201,7 @@ export default async function AdminDashboard() {
 
             <Button asChild className="w-full gap-2">
               <a
-                href="https://mulaidigital.com"
+                href="https://muzegraph.my.id"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -211,7 +211,7 @@ export default async function AdminDashboard() {
             </Button>
 
             <p className="text-[11px] text-muted-foreground text-center pt-2">
-              by <span className="font-medium text-foreground">mulaidigital.com</span>
+              by <span className="font-medium text-foreground">muzegraph.my.id</span>
             </p>
           </div>
         </div>

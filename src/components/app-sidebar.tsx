@@ -38,7 +38,16 @@ type Props = React.ComponentProps<typeof Sidebar> & {
 export function AppSidebar({ user, badges, siteName, siteLogoDark, siteLogoLight, ...props }: Props) {
   const name = siteName || content.site.name;
   const { resolvedTheme } = useTheme();
-  const logo = resolvedTheme === "dark" ? (siteLogoDark || "/assets/logo-dark.png") : (siteLogoLight || "/assets/logo-light.png");
+  
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logo = resolvedTheme === "dark" 
+    ? (siteLogoDark || "/assets/logo-dark.png") 
+    : (siteLogoLight || "/assets/logo-light.png");
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -46,13 +55,14 @@ export function AppSidebar({ user, badges, siteName, siteLogoDark, siteLogoLight
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" className="pointer-events-none">
-              {logo ? (
+              {}
+              {mounted && logo ? (
                 <div className="flex size-8 items-center justify-center rounded-lg bg-white/80 dark:bg-zinc-900/80">
                   <Image src={logo} alt={name} width={24} height={24} className="object-contain" />
                 </div>
               ) : (
                 <div className="flex size-8 items-center justify-center rounded-lg border bg-background shadow-sm">
-                  <GalleryVerticalEndIcon className="size-4" />
+                  <GalleryVerticalEndIcon className="size-4 text-muted-foreground animate-pulse" />
                 </div>
               )}
               <div className="grid flex-1 text-left text-sm leading-tight">

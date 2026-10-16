@@ -181,8 +181,11 @@ export function MediaPicker({
         onChange([...normalizedValue, id]);
       }
     } else {
-      onChange(id);
-      setOpen(false);
+      if (normalizedValue.includes(id)) {
+        onChange(""); 
+      } else {
+        onChange(id);
+      }
     }
   }
 
@@ -267,6 +270,7 @@ export function MediaPicker({
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
+            type="button"
             variant="outline"
             className="h-11 rounded-2xl border-border bg-background px-4"
           >
@@ -394,7 +398,7 @@ export function MediaPicker({
               {normalizedValue.length} file dipilih
             </p>
 
-            <Button onClick={() => setOpen(false)} className="rounded-2xl">
+            <Button type="button" onClick={() => setOpen(false)} className="rounded-2xl">
               Selesai
             </Button>
           </div>

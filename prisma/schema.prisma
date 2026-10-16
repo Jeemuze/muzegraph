@@ -526,6 +526,9 @@ model Seo {
   siteName           String?
   siteUrl            String?
   siteLogo           String?
+  siteLogoLight      String?
+  siteLogoDark       String?
+  favicon            String?
   title              String?
   description        String?
   keywords           String?
